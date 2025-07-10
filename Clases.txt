@@ -1,1 +1,36 @@
+------------------------------------------------ CLASES --------------------------------------------------------------------------------------------
+Están en mayúsculas. clase NO. Clase SÍ 
+
+
+--------------------------- STATIC ---------------------------------------------
+Las clases tiene tienen métodos o clases estáticas que pueden ser accedidos sin tener que instanciar las clases, un ejemplo es la Clase System. 
+
+Las clases estáticas solo puede ser denominadas así cuando son anidadas dentro de otra clase.  
+
+| ¿Dónde la escribes?      | ¿Puede ser `static`? | Se llama…                                      |
+| ------------------------ | -------------------- | ---------------------------------------------- |
+| **Top-level**            | ❌                    | *Clase normal*                                 |
+| **Anidada**              | ✅                    | *Static nested class* (clase interna estática) |
+| **Anidada sin `static`** | —                    | *Inner class* (tiene referencia al exterior)   |
+
+
+Ejemplo: 
+
+
+      public static class MiniPrintStream {      // Clase interna estática
+        public void println(String msg) {      // Método de instancia
+            java.lang.System.out.println(msg); // Reusa la consola real
+        }
+    }
+
+
+Ejemplo python:
+
+class Util:
+    @staticmethod
+    def saludar():
+        print("Hola!")
+
+Util.saludar()
+
 
