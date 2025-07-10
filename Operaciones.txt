@@ -1,0 +1,30 @@
+---------------------------------------------- COMPARACION ----------------------------------------------------
+Relacionales (primitivos) --------------------------
+
+== igualdad
+
+!= desigualdad
+
+> mayor que
+
+< menor que
+
+>= mayor o igual
+
+<= menor o igual
+
+Lógicos (booleans) ------------------
+
+&& AND lógico
+
+|| OR lógico
+
+! NOT lógico
+
+Objetos: ------------------------------
+
+obj1.equals(obj2) compara contenido (Strings, envoltorios, colecciones).
+
+Objects.equals(a, b) seguro ante null.
+
+Para orden: Comparable<T>.compareTo() o Comparator<T>.
