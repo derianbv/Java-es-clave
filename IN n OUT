@@ -1,0 +1,11 @@
+Cómo funciona el System.out.println()? -------------------------------------------------------
+
+
+| Eslabón       | ¿Qué es?                                                            | ¿Dónde está definido?      |
+| ------------- | ------------------------------------------------------------------- | -------------------------- |
+| **`System`**  | Una clase `final` del paquete `java.lang`                           | `java/lang/System.java`    |
+| **`out`**     | Un **campo** `public static final` de `System` (tipo `PrintStream`) | Dentro de esa misma clase  |
+| **`println`** | Un **método de instancia** de `PrintStream`                         | `java/io/PrintStream.java` |
+
+
+System = clase; out = objeto global que vive dentro de esa clase; println = acción que ese objeto sabe hacer.
