@@ -26,4 +26,6 @@ String str1 = scan.next();
 int num1 = scan.nextInt(); 
 
 
-
+----------------------- SALTOS DE LINEA --------------------------
+Así, entre parentesis: 
+System.out.println(int1 + "\n" + int2 + "\n" + int3);
