@@ -106,3 +106,10 @@ System.out.printf("%-15s%03d\n", "Java", 5); // por cada % significa que ahí va
 
 Salida:
 Java           005
+
+
+
+----------------------------------- PRINT LN Y PRINT ----------------------------------------------------------
+
+System.out.println("================================"); == System.out.print("================================\n");
+Es decir que println pone un salto de línea al final automáticamente 
