@@ -34,3 +34,82 @@ class Util:
 Util.saludar()
 
 
+----------------------------------- java.lang ---------------------------------------------------
+
+java.lang tiene muchas bases del lenguaje que hacen que Java sirva. Este paquete se importa sin necesidad de hacer nada ya que es elemental.
+Contiene: 
+
+:
+
+🧩 Fundamentos del lenguaje
+Object, Class, Package, Module, Record, Enum, Record (base de todos los records), StackTraceElement, StackWalker y StackWalker.Option 
+
+🔄 Contratos & utilidades genéricas
+Interfaces: Appendable, AutoCloseable, CharSequence, Cloneable, Comparable, Iterable, Readable, Runnable
+Clase genérica: Number 
+
+🧮 Envolturas de tipos primitivos
+Boolean, Byte, Character, Short, Integer, Long, Float, Double, Void 
+
+
+📝 Texto y plantillas
+String, StringBuilder, StringBuffer y la nueva StringTemplate (PREVIEW para plantillas de cadenas) 
+
+
+➗ Matemáticas
+Math, StrictMath 
+
+
+⚙️ Ejecución y procesos
+System, Runtime, Process, ProcessBuilder, ProcessHandle y ProcessHandle.Info 
+
+🧵 Concurrencia básica
+Thread, ThreadGroup, ThreadLocal, InheritableThreadLocal, ScopedValue (valor contextual inmutable, desde Java 21) 
+
+
+🔐 Seguridad y permisos
+SecurityManager, RuntimePermission 
+
+
+🎛️ Módulos y carga dinámica
+ClassLoader, ModuleLayer, IllegalAccessError/Exception, etc. 
+
+
+⚠️ Jerarquía de errores y excepciones
+Throwable → Error (y sus subtipos como OutOfMemoryError, StackOverflowError, InternalError, UnknownError)
+Throwable → Exception → RuntimeException (con decenas de hijas: NullPointerException, IllegalArgumentException, IndexOutOfBoundsException, etc.) 
+
+
+🏷️ Anotaciones estándar
+Deprecated, Override, SuppressWarnings, SafeVarargs, FunctionalInterface 
+
+-------------------------------------- Paquete java --------------------------------------------------
+
+Otros paquetes (aparte de java.lang) son: 
+
+| 📂 Paquete                                                                       | ¿Para qué sirve?                                                       | Emoji-guía |
+| -------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------- |
+| `java.io`                                                                        | Flujo clásico de entrada/salida con `InputStream`, `Reader`, etc.      | 🔄         |
+| `java.nio` y subpaquetes (`java.nio.file`, `java.nio.channels`…)                 | I/O no bloqueante, buffers, NIO 2 (paths, watch service).              | ⚡          |
+| `java.util`                                                                      | Colecciones (`List`, `Map`, `Set`), utilidades, `Optional`, etc.       | 🧰         |
+| `java.util.concurrent`                                                           | Hilos, *executors*, `CompletableFuture`, semáforos.                    | ⏱️         |
+| `java.util.stream`                                                               | API de *streams* funcionales (`map`, `filter`, `reduce`).              | 🌊         |
+| `java.time`                                                                      | Fechas y horas modernas (`LocalDate`, `Instant`, `Duration`).          | ⏰          |
+| `java.math`                                                                      | Aritmética de precisión arbitraria (`BigInteger`, `BigDecimal`).       | ➗          |
+| `java.net`                                                                       | Sockets, URLs, comunicación de red básica.                             | 🌐         |
+| `java.net.http`                                                                  | Cliente HTTP/2 y WebSocket de alto nivel (`HttpClient`).               | 📡         |
+| `java.sql`                                                                       | JDBC, conexión a bases de datos relacionales.                          | 🗄️        |
+| `java.security` (+ subpaquetes: `cert`, `spec`, `acl`…)                          | Criptografía, firmas, políticas de seguridad.                          | 🔒         |
+| `java.text`                                                                      | Formato y parseo de números, fechas, mensajes.                         | 📝         |
+| `java.util.logging`                                                              | Registro de eventos y *logs* con `Logger`.                             | 📋         |
+| `java.util.regex`                                                                | Expresiones regulares (`Pattern`, `Matcher`).                          | 🔍         |
+| `java.util.random`                                                               | Nuevo generador unificado y pluggable de números aleatorios.           | 🎲         |
+| `java.util.zip` y `java.util.jar`                                                | Compresión y manejo de archivos ZIP/JAR.                               | 📦         |
+| `java.awt` (+ `java.awt.image`, `java.awt.event`…)                               | GUI y gráficos “clásicos” (previo a JavaFX).                           | 🎨         |
+| `java.beans`                                                                     | Introspección de propiedades tipo Bean.                                | 🫘         |
+| `java.rmi`                                                                       | Invocación remota de métodos entre JVMs.                               | 📡         |
+| `java.lang.*`                                                                    | Fundamentos del lenguaje (lo vimos antes).                             | 🏗️        |
+| `java.lang.annotation`, `java.lang.invoke`, `java.lang.ref`, `java.lang.reflect` | Anotaciones, *method handles*, referencias suaves/fantasma, reflexión. | 🏷️🔧🧹🔎  |
+
+
+
