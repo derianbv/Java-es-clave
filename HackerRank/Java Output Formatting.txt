@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+    
+    Scanner scanner = new Scanner(System.in); 
+    
+    System.out.println("================================"); 
+    for ( byte i = 0; i < 3 ; i ++){
+        String str1 = scanner.next(); 
+        int int1 = scanner.nextInt();
+        System.out.printf("%-15s%03d\n",str1,int1); }   
+    
+    System.out.println("================================");       
+    }
+}
+
+
+Explicación: en archivo IN n OUT sobre printf
