@@ -1,15 +1,3 @@
-Cómo funciona el System.out.println()? -------------------------------------------------------
-
-
-| Eslabón       | ¿Qué es?                                                            | ¿Dónde está definido?      |
-| ------------- | ------------------------------------------------------------------- | -------------------------- |
-| **`System`**  | Una clase `final` del paquete `java.lang`                           | `java/lang/System.java`    |
-| **`out`**     | Un **campo** `public static final` de `System` (tipo `PrintStream`) | Dentro de esa misma clase  |
-| **`println`** | Un **método de instancia** de `PrintStream`                         | `java/io/PrintStream.java` |
-
-
-System = clase; out = objeto global que vive dentro de esa clase; println = acción que ese objeto sabe hacer.
-
 
 --------------------------------------------------------- Lectura --------------------------------------------------------------
 El encargado de leer (rudimentalmente) es una clase que se llama Scanner. 
@@ -26,6 +14,95 @@ String str1 = scan.next();
 int num1 = scan.nextInt(); 
 
 
+
+----------------------------------------------*********** STRINGS **************** ---------------------------------------------------------------------
+
+E
+Cómo funciona el System.out.println()? -------------------------------------------------------
+
+
+| Eslabón       | ¿Qué es?                                                            | ¿Dónde está definido?      |
+| ------------- | ------------------------------------------------------------------- | -------------------------- |
+| **`System`**  | Una clase `final` del paquete `java.lang`                           | `java/lang/System.java`    |
+| **`out`**     | Un **campo** `public static final` de `System` (tipo `PrintStream`) | Dentro de esa misma clase  |
+| **`println`** | Un **método de instancia** de `PrintStream`                         | `java/io/PrintStream.java` |
+
+
+System = clase; out = objeto global que vive dentro de esa clase; println = acción que ese objeto sabe hacer.
+
 ----------------------- SALTOS DE LINEA --------------------------
 Así, entre parentesis: 
-System.out.println(int1 + "\n" + int2 + "\n" + int3);
+System.out.println(int1 + "\n" + int2 + "\n" + int3); 
+
+
+------------------------- PRINT CON FORMATO -------------------------------------
+
+Similiar a como lo realiza C: 
+
+call printf 
+fmt: "x = %d",x 
+
+en x paso la iformación que va a estar en %d. 
+
+La idea es que paso un formato con un string y con place holders: 
+
+
+| Placeholder | Tipo de dato              | Ejemplo de uso       | Resultado      |
+| ----------- | ------------------------- | -------------------- | -------------- |
+| `%d`        | Entero decimal            | `%d` con `42`        | `42`           |
+| `%f`        | Número con punto flotante | `%.2f` con `3.14159` | `3.14`         |
+| `%s`        | Cadena de texto           | `%s` con `"Java"`    | `Java`         |
+| `%c`        | Carácter                  | `%c` con `'A'`       | `A`            |
+| `%b`        | Booleano                  | `%b` con `true`      | `true`         |
+| `%x` / `%X` | Hexadecimal               | `%x` con `255`       | `ff` / `FF`    |
+| `%e` / `%E` | Notación científica       | `%e` con `12345.678` | `1.234568e+04` |
+| `%n`        | Salto de línea            | (sin argumento)      | (salta línea)  |
+| `%%`        | Símbolo de porcentaje     | (sin argumento)      | `%`            |
+
+
+Los place holders no solo toman la variable y la ponen en el string sino que también le pueden dar un formato en específico, que es lo que se aprecia en la tabla de arriaba para la columna Resultado 
+
+System.out.printf("%x\n", 255); // → ff 
+En el caso de arriba toma 255 y lo traduce su codigo binario a hex. 
+
+
+La fórmula general para crear Strings con formato es:
+----------------
+%[argument_index$][flags][width][.precision][conversion]
+
+Dónde:
+- %                → Inicia el especificador
+- [argument_index$] (opcional) → Número de argumento, es decir si le paso varios argumentos que tome cual en orden de izq a derecha (ej: 2$ para el segundo)
+- [flags]          (opcional) → Modificadores de formato:
+    - -  → Alinea a la izquierda
+    - +  → Muestra signo en números positivos 
+    - 0  → Rellena con ceros a la izquierda
+    - ,  → Agrega separador de miles
+    - (  → Rodea negativos con paréntesis
+- [width]          (opcional) → Ancho mínimo del campo (rellena si es menor)
+- [.precision]     (opcional) → Precisión:
+    - Para %f → número de decimales
+    - Para %s → máximo de caracteres
+- [conversion] o placeholders   (obligatorio) → Tipo de dato:
+    - d  → Entero decimal
+    - f  → Punto flotante
+    - s  → Cadena (String)
+    - c  → Carácter
+    - b  → Booleano
+    - x/X → Hexadecimal
+    - %% → Literal '%'
+
+Ejemplos útiles:
+----------------
+%-15s       → Cadena alineada a la izquierda en 15 espacios ****COMO SE COMPONE:  [flags](-)[width](15)[conversion](s de string)****
+%03d        → Entero con 3 dígitos, relleno con ceros (ej: 005)
+%,.2f       → Número flotante con miles y 2 decimales (ej: 1,234.56)
+%(5d        → Entero en 5 espacios, negativos entre paréntesis
+%3$+07.1f   → Tercer argumento, float, ancho 7, 1 decimal, muestra signo
+
+Ejemplo en código:
+------------------
+System.out.printf("%-15s%03d\n", "Java", 5);
+
+Salida:
+Java           005
