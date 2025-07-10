@@ -1,0 +1,13 @@
+--------------------------------------------- IF -----------------------------------------------------------
+
+int nota = 75;
+
+if (nota >= 90) {
+    System.out.println("Sobresaliente 🌟");
+} else if (nota >= 70) {
+    System.out.println("Bien hecho 😊");
+} else if (nota >= 50) {
+    System.out.println("Necesitas mejorar 🤔");
+} else {
+    System.out.println("Reprobado 😞");
+}
