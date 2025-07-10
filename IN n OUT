@@ -9,3 +9,21 @@ Cómo funciona el System.out.println()? ----------------------------------------
 
 
 System = clase; out = objeto global que vive dentro de esa clase; println = acción que ese objeto sabe hacer.
+
+
+--------------------------------------------------------- Lectura --------------------------------------------------------------
+El encargado de leer (rudimentalmente) es una clase que se llama Scanner. 
+Para usarlo debo: 
+
+1. 
+debo crear un nuevo objeto Scanner: 
+
+Scanner scan = new Scanner(System.in)
+
+Ahora puedo ir por las lineas de un documento recolectando cosas: 
+
+String str1 = scan.next(); 
+int num1 = scan.nextInt(); 
+
+
+
