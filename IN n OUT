@@ -36,7 +36,7 @@ System.out.println(int1 + "\n" + int2 + "\n" + int3);
 
 
 ------------------------- PRINT CON FORMATO -------------------------------------
-
+JAVA: System.out.printf(formato, var1, ... ,varn);
 Similiar a como lo realiza C: 
 
 call printf 
