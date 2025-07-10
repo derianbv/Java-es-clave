@@ -116,7 +116,7 @@ Otros paquetes (aparte de java.lang) son:
 
 ----------------------------------- CLASE FINAL ------------------------------------------------------
 
-OJO: iferente de metodo final o variable final. 
+OJO: diferente de metodo final o variable final. 
 
 Las clases finales son aquellas que no se pueden heredar, es decir, que su objetivo ya se cumplió. Esto se hace para evitar romperlas o cambiar su lógica, algunas clases de este estilo son: 
 
@@ -125,3 +125,5 @@ Las clases finales son aquellas que no se pueden heredar, es decir, que su objet
       -java.lang.Math
       -java.lang.System
       -java.time.Instant
+
+
