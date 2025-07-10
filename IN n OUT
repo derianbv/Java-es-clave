@@ -102,7 +102,7 @@ Ejemplos útiles:
 
 Ejemplo en código:
 ------------------
-System.out.printf("%-15s%03d\n", "Java", 5);
+System.out.printf("%-15s%03d\n", "Java", 5); // por cada % significa que ahí va una variable
 
 Salida:
 Java           005
