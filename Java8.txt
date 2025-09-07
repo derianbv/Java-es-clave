@@ -1,0 +1,8 @@
+
+// Java no tiene list comprehensions nativamente
+// Pero desde Java 8 puedes usar streams
+List<Integer> cuadrados = IntStream.range(0, 5)
+    .map(x -> x * x)
+    .boxed()
+    .collect(Collectors.toList());
+```
