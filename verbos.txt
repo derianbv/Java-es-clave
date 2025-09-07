@@ -11,3 +11,87 @@ CLASE: Que no puede ser heredada
 
 PROTECTED: ------------------------------------------------------------------------
 CLASE: Que esa variable o método puede ser solo accesible por subclases de la clase (sus hijitos)
+
+
+
+ABSTRACT: ------------------------------------------------------------------------
+CLASE: se dice que es una clase que va a tener ciertos métodos que no define en su propio código pero que si heredan de la clase, las clases hijas sí o sí tiene que definir el funcionamiento de esos métodos sin definir. 
+
+// Métodos que OBLIGAN a implementar (como en las interfaces)
+    public abstract void acelerar();
+    public abstract void frenar();
+
+
+
+INTERFACE: -----------------------------------------------------------------------
+Te explico las interfaces de forma simple, ya que son más básicas que las clases abstractas.
+
+**¿Qué es una interfaz?**
+
+Una interfaz es como un "contrato" que dice "si quieres ser de este tipo, debes saber hacer estas cosas". Es una lista de métodos que una clase DEBE implementar.
+
+**Piénsalo así:**
+
+Imagina que tienes un "contrato de conductor":
+- Debe saber acelerar
+- Debe saber frenar
+- Debe saber girar
+
+Cualquier persona que quiera ser conductor DEBE cumplir con estas habilidades.
+
+**Ejemplo simple:**
+
+```java
+// Esta es la interfaz (el "contrato")
+interface Conductor {
+    void acelerar();
+    void frenar(); 
+    void girar();
+}
+
+// Esta clase "firma el contrato" (implementa la interfaz)
+class ConductorPrincipiante implements Conductor {
+    public void acelerar() {
+        System.out.println("Acelero despacio");
+    }
+    
+    public void frenar() {
+        System.out.println("Freno suavemente");
+    }
+    
+    public void girar() {
+        System.out.println("Giro con cuidado");
+    }
+}
+
+class ConductorExperto implements Conductor {
+    public void acelerar() {
+        System.out.println("Acelero rápido");
+    }
+    
+    public void frenar() {
+        System.out.println("Freno en seco");
+    }
+    
+    public void girar() {
+        System.out.println("Giro con destreza");
+    }
+}
+```
+
+**La regla principal:**
+
+Si una clase dice "implements MiInterfaz", entonces OBLIGATORIAMENTE debe escribir el código para todos los métodos que están en esa interfaz.
+
+**¿Para qué sirve esto?**
+
+Te permite tratar a objetos diferentes de la misma manera si cumplen el mismo "contrato":
+
+```java
+Conductor conductor1 = new ConductorPrincipiante();
+Conductor conductor2 = new ConductorExperto();
+
+// Ambos pueden hacer lo mismo, aunque de forma diferente
+conductor1.acelerar(); // "Acelero despacio"
+conductor2.acelerar(); // "Acelero rápido"
+```
