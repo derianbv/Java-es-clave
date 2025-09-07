@@ -1,1 +1,670 @@
 
+# 🚨 Guía Completa: Excepciones en Java
+
+## 🎯 ¿Qué vas a aprender?
+
+Esta guía te enseñará desde cero cómo funcionan las excepciones en Java, desde los conceptos más básicos hasta técnicas avanzadas que usan los programadores profesionales. Vamos a construir tu conocimiento paso a paso, como si estuviéramos construyendo una casa desde los cimientos.
+
+---
+
+## 🏗️ PARTE 1: Los Fundamentos - ¿Qué es una Excepción en Java?
+
+### 🤔 Concepto Central
+
+Una excepción en Java es como un mensaje urgente que tu programa envía cuando se encuentra con una situación que no puede manejar por sí mismo. Imagina que eres un empleado de una oficina y te encuentras con un problema que está fuera de tu autoridad resolver. En lugar de intentar solucionarlo mal o simplemente ignorarlo, envías un reporte detallado a tu supervisor explicando exactamente qué problema encontraste.
+
+Esto es exactamente lo que hace una excepción en Java: cuando un método encuentra un problema que no puede resolver, "lanza" (throw) una excepción con información específica sobre qué salió mal, y luego se detiene inmediatamente. Es crucial entender que cuando un método lanza una excepción, su ejecución se detiene completamente en ese punto, igual que cuando usas `return`.
+
+### 🛑 El Comportamiento Fundamental: La Detención Inmediata
+
+Este es probablemente el concepto más importante que necesitas entender sobre las excepciones en Java: **cuando tu código ejecuta `throw`, la ejecución del método se detiene inmediatamente**, tal como sucede con `return`. La diferencia está en lo que envía de vuelta al código que llamó al método.
+
+```java
+public class EjemploDetencion {
+    
+    public static void demostrarDetencionConReturn() {
+        System.out.println("🚀 Inicio del método");
+        System.out.println("📝 Ejecutando línea 2");
+        
+        if (true) {
+            System.out.println("⚠️ A punto de usar return");
+            return; // ⬅️ AQUÍ SE DETIENE TODO
+        }
+        
+        // ❌ Esta línea NUNCA se ejecuta
+        System.out.println("Esta línea nunca se imprimirá");
+    }
+    
+    public static void demostrarDetencionConThrow() {
+        System.out.println("🚀 Inicio del método");
+        System.out.println("📝 Ejecutando línea 2");
+        
+        if (true) {
+            System.out.println("⚠️ A punto de lanzar excepción");
+            throw new RuntimeException("Algo salió mal"); // ⬅️ AQUÍ SE DETIENE TODO
+        }
+        
+        // ❌ Esta línea NUNCA se ejecuta
+        System.out.println("Esta línea nunca se imprimirá");
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("=== Probando return ===");
+        demostrarDetencionConReturn();
+        System.out.println("Método con return terminó\n");
+        
+        System.out.println("=== Probando throw ===");
+        try {
+            demostrarDetencionConThrow();
+        } catch (RuntimeException e) {
+            System.out.println("🛑 Excepción capturada: " + e.getMessage());
+        }
+        System.out.println("Método con throw terminó");
+    }
+}
+```
+
+### 🎯 La Diferencia Clave: Destino del Mensaje
+
+Aunque tanto `return` como `throw` detienen la ejecución del método inmediatamente, envían su "mensaje" a lugares diferentes:
+
+- `return valor` envía el valor directamente al código que llamó al método
+- `throw excepcion` envía la excepción al bloque `catch` más cercano que pueda manejarla
+
+Piensa en esto como diferentes tipos de entrega de correo: `return` es como entregar un paquete directamente en la puerta, mientras que `throw` es como enviarlo a una oficina de correos especializada (el bloque `catch`) que sabe cómo manejar diferentes tipos de paquetes problemáticos.
+
+---
+
+## 📚 PARTE 2: La Jerarquía de Excepciones - El Sistema de Clasificación
+
+### 🏛️ La Estructura Fundamental
+
+Java organiza todas las excepciones en una jerarquía muy específica, como un árbol genealógico. En la raíz de todo está la clase `Throwable`, que es como el ancestro común de todas las situaciones excepcionales que pueden ocurrir en Java.
+
+```java
+// La jerarquía básica se ve así:
+// Throwable
+//   ├── Error (problemas graves del sistema)
+//   └── Exception (situaciones que puedes manejar)
+//       ├── RuntimeException (excepciones no verificadas)
+//       └── Otras excepciones (excepciones verificadas)
+```
+
+Esta organización no es accidental. Java usa esta jerarquía para determinar cómo debes manejar diferentes tipos de problemas. Es como tener diferentes departamentos en un hospital: algunos problemas van a emergencias, otros a consulta general, y otros requieren especialistas.
+
+### 🚨 Excepciones Verificadas vs No Verificadas: La Gran División
+
+Esta es una de las características más distintivas de Java, y una fuente común de confusión para nuevos programadores. Java divide las excepciones en dos categorías fundamentales que determinan cómo debes escribir tu código:
+
+**Excepciones Verificadas (Checked Exceptions):** Son como citas médicas obligatorias. El compilador de Java te obliga a reconocer que estas excepciones pueden ocurrir y te exige que tengas un plan para manejarlas. Si no lo haces, tu código simplemente no compilará.
+
+**Excepciones No Verificadas (Unchecked Exceptions):** Son como accidentes impredecibles. El compilador no te obliga a manejarlas, aunque puedes hacerlo si quieres. Incluyen `RuntimeException` y todas sus subclases.
+
+```java
+public class EjemploTiposExcepciones {
+    
+    // Método que puede lanzar una excepción VERIFICADA
+    public static String leerArchivo(String nombreArchivo) throws IOException {
+        // El compilador te OBLIGA a declarar "throws IOException"
+        // porque FileReader puede lanzar una excepción verificada
+        FileReader archivo = new FileReader(nombreArchivo);
+        // ... lógica de lectura ...
+        return "contenido del archivo";
+    }
+    
+    // Método que puede lanzar una excepción NO VERIFICADA
+    public static int dividir(int a, int b) {
+        // NO necesitas declarar "throws ArithmeticException"
+        // porque es una RuntimeException (no verificada)
+        if (b == 0) {
+            throw new ArithmeticException("División por cero");
+        }
+        return a / b;
+    }
+    
+    public static void main(String[] args) {
+        // Para excepciones VERIFICADAS, debes usar try-catch O declarar throws
+        try {
+            String contenido = leerArchivo("datos.txt");
+            System.out.println("Archivo leído: " + contenido);
+        } catch (IOException e) {
+            System.out.println("Error leyendo archivo: " + e.getMessage());
+        }
+        
+        // Para excepciones NO VERIFICADAS, puedes elegir si manejarlas
+        try {
+            int resultado = dividir(10, 0);
+            System.out.println("Resultado: " + resultado);
+        } catch (ArithmeticException e) {
+            System.out.println("Error en división: " + e.getMessage());
+        }
+        
+        // También podrías llamar dividir sin try-catch (compilaría bien)
+        // int resultado = dividir(10, 2); // Esto funcionaría sin problemas
+    }
+}
+```
+
+### 🎓 ¿Por Qué Java Hace Esta Distinción?
+
+Java hace esta distinción porque quiere ayudarte a escribir código más robusto. Las excepciones verificadas representan situaciones que son "parte del negocio" y que un programador responsable debería anticipar: archivos que podrían no existir, conexiones de red que podrían fallar, bases de datos que podrían estar inaccesibles.
+
+Las excepciones no verificadas, por otro lado, generalmente representan errores de programación: dividir por cero, acceder a un array fuera de sus límites, usar una referencia nula. Java asume que un buen programador debería escribir código que evite estos problemas, pero reconoce que a veces querrás manejarlos para hacer tu programa más robusto.
+
+---
+
+## 🔧 PARTE 3: La Sintaxis Fundamental - try, catch, finally, throw, throws
+
+### 🏗️ El Bloque try-catch: Tu Red de Seguridad
+
+El bloque `try-catch` es como tener un plan de contingencia. Le dices a Java: "Voy a intentar hacer esto (try), pero si algo específico sale mal, aquí está mi plan de respaldo (catch)".
+
+```java
+public class EjemploTryCatch {
+    
+    public static void ejemploBasico() {
+        System.out.println("🔍 Iniciando operación arriesgada...");
+        
+        try {
+            // Este es el código que "intentamos" ejecutar
+            System.out.println("📝 Paso 1: Preparando operación");
+            
+            int[] numeros = {1, 2, 3};
+            System.out.println("📝 Paso 2: Accediendo al array");
+            
+            // Esta línea lanzará ArrayIndexOutOfBoundsException
+            int valor = numeros[10]; // ⬅️ AQUÍ ocurre la excepción
+            
+            // ❌ Esta línea nunca se ejecuta porque la excepción detiene la ejecución
+            System.out.println("📝 Paso 3: Valor obtenido: " + valor);
+            
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Solo llegamos aquí si se lanzó esa excepción específica
+            System.out.println("🛑 Excepción capturada: " + e.getClass().getSimpleName());
+            System.out.println("💡 Mensaje del error: " + e.getMessage());
+            System.out.println("🔧 Aplicando plan de contingencia...");
+        }
+        
+        System.out.println("✅ Operación completada (con o sin excepción)");
+    }
+    
+    public static void main(String[] args) {
+        ejemploBasico();
+    }
+}
+```
+
+### 🎯 Múltiples catch: Planes Específicos para Problemas Específicos
+
+Así como un hospital tiene diferentes departamentos para diferentes tipos de emergencias, puedes tener múltiples bloques `catch` para manejar diferentes tipos de excepciones de maneras específicas:
+
+```java
+public class EjemploMultiplesCatch {
+    
+    public static void operacionCompleja(String entrada) {
+        try {
+            System.out.println("🚀 Iniciando operación compleja con: " + entrada);
+            
+            // Operación 1: Conversión numérica (puede lanzar NumberFormatException)
+            int numero = Integer.parseInt(entrada);
+            System.out.println("✅ Número convertido: " + numero);
+            
+            // Operación 2: División (puede lanzar ArithmeticException)
+            int resultado = 100 / numero;
+            System.out.println("✅ División completada: " + resultado);
+            
+            // Operación 3: Acceso a array (puede lanzar ArrayIndexOutOfBoundsException)
+            int[] datos = {1, 2, 3};
+            int valor = datos[numero];
+            System.out.println("✅ Valor del array: " + valor);
+            
+        } catch (NumberFormatException e) {
+            // Plan específico para errores de conversión
+            System.out.println("🔢 Error de formato numérico: " + e.getMessage());
+            System.out.println("💡 Sugerencia: Asegúrate de ingresar solo números");
+            
+        } catch (ArithmeticException e) {
+            // Plan específico para errores matemáticos
+            System.out.println("➕ Error matemático: " + e.getMessage());
+            System.out.println("💡 Sugerencia: No se puede dividir por cero");
+            
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Plan específico para errores de índice
+            System.out.println("📊 Error de índice de array: " + e.getMessage());
+            System.out.println("💡 Sugerencia: El índice está fuera del rango válido (0-2)");
+            
+        } catch (Exception e) {
+            // Plan general para cualquier otro error no anticipado
+            System.out.println("💥 Error inesperado: " + e.getClass().getSimpleName());
+            System.out.println("🔍 Mensaje: " + e.getMessage());
+            System.out.println("💡 Por favor reporta este error");
+        }
+        
+        System.out.println("🏁 Operación finalizada");
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("=== Caso 1: Entrada válida ===");
+        operacionCompleja("2");
+        
+        System.out.println("\n=== Caso 2: Entrada no numérica ===");
+        operacionCompleja("abc");
+        
+        System.out.println("\n=== Caso 3: División por cero ===");
+        operacionCompleja("0");
+        
+        System.out.println("\n=== Caso 4: Índice fuera de rango ===");
+        operacionCompleja("5");
+    }
+}
+```
+
+### 🔄 El Bloque finally: Lo Que Siempre Debe Ocurrir
+
+El bloque `finally` es como las rutinas de cierre que deben ejecutarse sin importar qué suceda. Es especialmente útil para limpiar recursos como archivos abiertos, conexiones de base de datos, o cualquier cosa que necesite ser "cerrada" apropiadamente.
+
+```java
+public class EjemploFinally {
+    
+    public static void operacionConRecursos() {
+        FileWriter archivo = null;
+        
+        try {
+            System.out.println("📁 Abriendo archivo para escritura...");
+            archivo = new FileWriter("datos.txt");
+            
+            System.out.println("✍️ Escribiendo datos...");
+            archivo.write("Datos importantes");
+            
+            // Simulamos un error que podría ocurrir
+            if (Math.random() > 0.5) {
+                throw new RuntimeException("Error simulado durante la escritura");
+            }
+            
+            System.out.println("✅ Datos escritos exitosamente");
+            
+        } catch (IOException e) {
+            System.out.println("💿 Error de E/S: " + e.getMessage());
+            
+        } catch (RuntimeException e) {
+            System.out.println("💥 Error durante la operación: " + e.getMessage());
+            
+        } finally {
+            // Este bloque SIEMPRE se ejecuta, haya excepción o no
+            System.out.println("🔧 Ejecutando limpieza en finally...");
+            
+            if (archivo != null) {
+                try {
+                    archivo.close();
+                    System.out.println("📁 Archivo cerrado correctamente");
+                } catch (IOException e) {
+                    System.out.println("⚠️ Error cerrando archivo: " + e.getMessage());
+                }
+            }
+            
+            System.out.println("🧹 Limpieza completada");
+        }
+        
+        System.out.println("🏁 Método finalizado");
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("=== Ejecutando operación con recursos ===");
+        operacionConRecursos();
+        System.out.println("\n=== Ejecutando nuevamente ===");
+        operacionConRecursos();
+    }
+}
+```
+
+### 🗣️ throw: Comunicando Problemas Específicos
+
+La palabra clave `throw` es tu herramienta para comunicar que has detectado una situación que tu método no puede manejar. Es importante entender que `throw` detiene inmediatamente la ejecución de tu método, igual que `return`:
+
+```java
+public class EjemploThrow {
+    
+    /**
+     * Método que valida una edad y comunica problemas específicos
+     * NOTA IMPORTANTE: Este método se DETIENE inmediatamente cuando ejecuta throw
+     */
+    public static boolean validarEdad(int edad) {
+        System.out.println("🔍 Validando edad: " + edad);
+        
+        // Validación 1: Rango negativo
+        if (edad < 0) {
+            System.out.println("❌ Edad negativa detectada");
+            // El método se DETIENE aquí si la edad es negativa
+            throw new IllegalArgumentException("La edad no puede ser negativa: " + edad);
+        }
+        
+        // Validación 2: Rango excesivo
+        if (edad > 120) {
+            System.out.println("❌ Edad excesiva detectada");
+            // El método se DETIENE aquí si la edad es muy alta
+            throw new IllegalArgumentException("La edad no puede ser mayor a 120: " + edad);
+        }
+        
+        // Solo llegamos aquí si todas las validaciones pasaron
+        System.out.println("✅ Edad válida confirmada");
+        return true;
+    }
+    
+    /**
+     * Método que demuestra cómo usar validaciones que pueden lanzar excepciones
+     */
+    public static String procesarUsuario(String nombre, int edad) {
+        System.out.println("👤 Procesando usuario: " + nombre + ", " + edad + " años");
+        
+        try {
+            // Intentamos validar la edad (puede detenerse con throw)
+            validarEdad(edad);
+            
+            // Si llegamos aquí, la validación fue exitosa
+            String mensaje = "Usuario " + nombre + " (" + edad + " años) procesado exitosamente";
+            System.out.println("🎉 " + mensaje);
+            return mensaje;
+            
+        } catch (IllegalArgumentException problema) {
+            // Manejamos el problema reportado por validarEdad()
+            String mensajeError = "Error procesando a " + nombre + ": " + problema.getMessage();
+            System.out.println("🛑 " + mensajeError);
+            return mensajeError;
+        }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("=== Caso 1: Edad válida ===");
+        String resultado1 = procesarUsuario("Ana", 25);
+        System.out.println("Resultado: " + resultado1);
+        
+        System.out.println("\n=== Caso 2: Edad negativa ===");
+        String resultado2 = procesarUsuario("Luis", -5);
+        System.out.println("Resultado: " + resultado2);
+        
+        System.out.println("\n=== Caso 3: Edad excesiva ===");
+        String resultado3 = procesarUsuario("Carmen", 150);
+        System.out.println("Resultado: " + resultado3);
+    }
+}
+```
+
+### 📋 throws: Declarando Qué Problemas Puede Causar Tu Método
+
+La palabra clave `throws` es como una etiqueta de advertencia en tu método. Le dice a otros programadores (y al compilador) qué tipos de excepciones puede lanzar tu método. Es especialmente importante para excepciones verificadas:
+
+```java
+import java.io.*;
+
+public class EjemploThrows {
+    
+    /**
+     * Método que declara explícitamente qué excepciones puede lanzar
+     * La palabra "throws" es una DECLARACIÓN, no ejecuta nada
+     */
+    public static String leerPrimerLineaArchivo(String nombreArchivo) throws IOException {
+        System.out.println("📁 Intentando leer archivo: " + nombreArchivo);
+        
+        // Estas operaciones pueden lanzar IOException (excepción verificada)
+        FileReader archivo = new FileReader(nombreArchivo); // Puede lanzar FileNotFoundException
+        BufferedReader lector = new BufferedReader(archivo);
+        
+        String primeraLinea = lector.readLine(); // Puede lanzar IOException
+        
+        lector.close();
+        System.out.println("✅ Primera línea leída exitosamente");
+        
+        return primeraLinea;
+    }
+    
+    /**
+     * Método que puede lanzar múltiples tipos de excepciones
+     */
+    public static void operacionCompleja(String archivo, int divisor) 
+            throws IOException, ArithmeticException {
+        
+        // Operación que puede lanzar IOException
+        String contenido = leerPrimerLineaArchivo(archivo);
+        
+        // Operación que puede lanzar ArithmeticException
+        int numero = Integer.parseInt(contenido);
+        int resultado = numero / divisor; // Puede ser división por cero
+        
+        System.out.println("Resultado de la operación: " + resultado);
+    }
+    
+    /**
+     * Método que maneja las excepciones declaradas por otros métodos
+     */
+    public static void procesarOperacion(String archivo, int divisor) {
+        try {
+            // Llamamos a un método que declara excepciones con throws
+            operacionCompleja(archivo, divisor);
+            System.out.println("🎉 Operación completada exitosamente");
+            
+        } catch (FileNotFoundException e) {
+            // Manejo específico para archivo no encontrado
+            System.out.println("📁 Archivo no encontrado: " + e.getMessage());
+            System.out.println("💡 Verifica que el archivo exista y esté en la ubicación correcta");
+            
+        } catch (IOException e) {
+            // Manejo para otros errores de E/S
+            System.out.println("💿 Error de entrada/salida: " + e.getMessage());
+            System.out.println("💡 Verifica los permisos del archivo");
+            
+        } catch (NumberFormatException e) {
+            // Manejo para errores de conversión numérica
+            System.out.println("🔢 El contenido del archivo no es un número válido: " + e.getMessage());
+            System.out.println("💡 Asegúrate de que el archivo contenga solo números");
+            
+        } catch (ArithmeticException e) {
+            // Manejo para errores matemáticos
+            System.out.println("➕ Error matemático: " + e.getMessage());
+            System.out.println("💡 No se puede dividir por cero");
+        }
+    }
+    
+    public static void main(String[] args) {
+        // Creamos un archivo de prueba para la demostración
+        try {
+            FileWriter escritor = new FileWriter("test.txt");
+            escritor.write("42");
+            escritor.close();
+            System.out.println("📄 Archivo de prueba creado");
+        } catch (IOException e) {
+            System.out.println("Error creando archivo de prueba: " + e.getMessage());
+        }
+        
+        System.out.println("\n=== Caso 1: Operación exitosa ===");
+        procesarOperacion("test.txt", 2);
+        
+        System.out.println("\n=== Caso 2: Archivo no existe ===");
+        procesarOperacion("archivo_inexistente.txt", 2);
+        
+        System.out.println("\n=== Caso 3: División por cero ===");
+        procesarOperacion("test.txt", 0);
+    }
+}
+```
+
+---
+
+## 🎨 PARTE 4: Creando Tus Propias Excepciones
+
+### 🛠️ ¿Por Qué Crear Excepciones Personalizadas?
+
+Crear tus propias excepciones es como diseñar señales de tráfico específicas para tu código. Las excepciones estándar de Java son como señales genéricas ("Alto", "Ceda el paso"), pero a veces necesitas señales más específicas ("Construcción en el carril derecho", "Zona escolar - reduzca velocidad").
+
+Las excepciones personalizadas te permiten comunicar exactamente qué tipo de problema específico ocurrió en tu dominio de aplicación, lo que hace que tu código sea más expresivo y fácil de mantener.
+
+```java
+/**
+ * Excepción personalizada para problemas relacionados con validación de usuarios
+ * Extendemos Exception para hacer que sea una excepción verificada
+ */
+class UsuarioInvalidoException extends Exception {
+    private String tipoError;
+    private String valorProblematico;
+    
+    public UsuarioInvalidoException(String mensaje, String tipoError, String valorProblematico) {
+        super(mensaje); // Llamamos al constructor de la clase padre
+        this.tipoError = tipoError;
+        this.valorProblematico = valorProblematico;
+    }
+    
+    // Métodos para obtener información específica del error
+    public String getTipoError() {
+        return tipoError;
+    }
+    
+    public String getValorProblematico() {
+        return valorProblematico;
+    }
+    
+    @Override
+    public String toString() {
+        return "UsuarioInvalidoException{" +
+                "mensaje='" + getMessage() + "', " +
+                "tipo='" + tipoError + "', " +
+                "valor='" + valorProblematico + "'}";
+    }
+}
+
+/**
+ * Excepción para problemas específicos de edad
+ */
+class EdadInvalidaException extends UsuarioInvalidoException {
+    private int edadProblematica;
+    
+    public EdadInvalidaException(String mensaje, int edad) {
+        super(mensaje, "EDAD_INVALIDA", String.valueOf(edad));
+        this.edadProblematica = edad;
+    }
+    
+    public int getEdadProblematica() {
+        return edadProblematica;
+    }
+    
+    public boolean esEdadNegativa() {
+        return edadProblematica < 0;
+    }
+    
+    public boolean esEdadExcesiva() {
+        return edadProblematica > 120;
+    }
+}
+
+/**
+ * Excepción para problemas específicos de email
+ */
+class EmailInvalidoException extends UsuarioInvalidoException {
+    public EmailInvalidoException(String mensaje, String email) {
+        super(mensaje, "EMAIL_INVALIDO", email);
+    }
+}
+
+public class EjemploExcepcionesPersonalizadas {
+    
+    /**
+     * Valida la edad de un usuario y lanza excepciones específicas
+     */
+    public static void validarEdad(int edad) throws EdadInvalidaException {
+        System.out.println("🔍 Validando edad: " + edad);
+        
+        if (edad < 0) {
+            // Lanzamos nuestra excepción personalizada con información específica
+            throw new EdadInvalidaException(
+                "La edad no puede ser negativa", 
+                edad
+            );
+        }
+        
+        if (edad > 120) {
+            throw new EdadInvalidaException(
+                "La edad no puede ser mayor a 120 años", 
+                edad
+            );
+        }
+        
+        System.out.println("✅ Edad válida");
+    }
+    
+    /**
+     * Valida el formato de un email
+     */
+    public static void validarEmail(String email) throws EmailInvalidoException {
+        System.out.println("📧 Validando email: " + email);
+        
+        if (email == null || email.trim().isEmpty()) {
+            throw new EmailInvalidoException("El email no puede estar vacío", email);
+        }
+        
+        if (!email.contains("@")) {
+            throw new EmailInvalidoException("El email debe contener @", email);
+        }
+        
+        if (!email.contains(".")) {
+            throw new EmailInvalidoException("El email debe contener un dominio válido", email);
+        }
+        
+        System.out.println("✅ Email válido");
+    }
+    
+    /**
+     * Registra un usuario validando todos los campos
+     */
+    public static String registrarUsuario(String nombre, int edad, String email) {
+        System.out.println("👤 Registrando usuario: " + nombre + ", " + edad + ", " + email);
+        
+        try {
+            // Validaciones que pueden lanzar excepciones específicas
+            validarEdad(edad);
+            validarEmail(email);
+            
+            // Si llegamos aquí, todas las validaciones pasaron
+            String mensaje = "Usuario " + nombre + " registrado exitosamente";
+            System.out.println("🎉 " + mensaje);
+            return mensaje;
+            
+        } catch (EdadInvalidaException e) {
+            // Manejo específico para problemas de edad
+            System.out.println("🛑 Error de edad: " + e.getMessage());
+            
+            // Podemos usar los métodos específicos de nuestra excepción
+            if (e.esEdadNegativa()) {
+                System.out.println("💡 Sugerencia: ¿Olvidaste un signo negativo?");
+            } else if (e.esEdadExcesiva()) {
+                System.out.println("💡 Sugerencia: Verifica que la edad sea correcta");
+            }
+            
+            return "Error: " + e.getMessage();
+            
+        } catch (EmailInvalidoException e) {
+            // Manejo específico para problemas de email
+            System.out.println("🛑 Error de email: " + e.getMessage());
+            System.out.println("💡 Sugerencia: Usa el formato usuario@dominio.com");
+            
+            return "Error: " + e.getMessage();
+            
+        } catch (Exception e) {
+            // Manejo para cualquier otro error inesperado
+            System.out.println("💥 Error inesperado: " + e.getMessage());
+            return "Error interno del sistema";
+        }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("=== Caso 1: Usuario válido ===");
+        String resultado1 = registrarUsuario("Ana", 25, "ana@email.com");
+        System.out.println("Resultado: " + resultado1);
+        
+        System.out.println("\n=== Caso 2: Edad negativa ===");
+        String resultado2 = registrarUsuario("Luis", -30, "luis@email.com");
+        System.out.println("Resultado: " + resultado2);
+        
+        System.out.println("\n=== Caso 3: Edad excesiva ===");
+        String resultado3 = registrarUsuario("Carmen", 150, "carmen@email.com");
+        System.out.println("Resultado: " + resultado3);
+        
+        System.out.println("\n=== Caso 4: Email inválido ===");
+        String resultado4 = registrarUsuario("Pedro", 30, "email-malformado");
