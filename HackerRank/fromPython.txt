@@ -236,7 +236,7 @@ public class Operaciones {
         return a + b;
     }
     
-    // Sobrecarga de métodos para simular valores por defecto
+    // Sobrecarga de métodos para simular valores por defecto ****** Overwrite ********
     public static String saludar() {
         return saludar("Mundo");  // llama a la versión con parámetro
     }
@@ -244,8 +244,10 @@ public class Operaciones {
     public static String saludar(String nombre) {
         return "Hola, " + nombre;
     }
-    
-    // Varargs para número variable de argumentos
+
+
+
+    // Varargs para número variable de argumento, es el *args de python, acá tiene que estar al final de los argumentos, internamente se crea una  lista 
     public static int sumarTodos(int... numeros) {
         int suma = 0;
         for (int num : numeros) {
@@ -253,7 +255,10 @@ public class Operaciones {
         }
         return suma;
     }
-    
+
+
+
+
     // Llamadas
     public static void main(String[] args) {
         int resultado = sumar(3, 5);
