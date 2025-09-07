@@ -218,6 +218,8 @@ def sumar(a, b):
 def saludar(nombre="Mundo"):
     return f"Hola, {nombre}"
 
+// IMPORTANTE: Significa que los valores por defecto que se pasan en python, en java hay que pasarlos usando OverWrite de los métodos
+
 # Función con número variable de argumentos
 def sumar_todos(*numeros):
     return sum(numeros)
