@@ -1,3 +1,4 @@
+
 ---------------------------------------------- COMPARACION ----------------------------------------------------
 Relacionales (primitivos) --------------------------
 
@@ -28,3 +29,18 @@ obj1.equals(obj2) compara contenido (Strings, envoltorios, colecciones).
 Objects.equals(a, b) seguro ante null.
 
 Para orden: Comparable<T>.compareTo() o Comparator<T>.
+
+
+
+------------------ POST Y PRE INCREMENTO ----------------------------------
+
+int a = 5;
+int b = 5;
+
+int resultado1 = ++a * 2;  // Pre-incremento, es decir que se suma 1 y así si se pasa a a rax (se retorna)
+int resultado2 = b++ * 2;  // Post-incremento, que se pasa b a rax (se retorna) y luego sí se le suma 1. 
+
+System.out.println("a = " + a);           // a = 6
+System.out.println("b = " + b);           // b = 6  
+System.out.println("resultado1 = " + resultado1);  // resultado1 = 12
+System.out.println("resultado2 = " + resultado2);  // resultado2 = 10
