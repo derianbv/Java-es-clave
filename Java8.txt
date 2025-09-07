@@ -1,4 +1,8 @@
 
+
+STREAMS: --------------------------------------------------------------------------------------------------
+Es como manejar el ORM de django para consultar y modificar datos de un arreglo. 
+
 // Java no tiene list comprehensions nativamente
 // Pero desde Java 8 puedes usar streams
 List<Integer> cuadrados = IntStream.range(0, 5)
@@ -6,3 +10,12 @@ List<Integer> cuadrados = IntStream.range(0, 5)
     .boxed()
     .collect(Collectors.toList());
 ```
+ **** OTRO EJEMPLO: ****
+
+List<String> nombres = Arrays.asList("Ana", "Juan", "Pedro", "María", "Luis");
+
+long count = nombres.stream()  // Crear Stream desde la lista
+    .filter(n -> n.length() > 4)  // Operación intermedia: filtrar nombres con más de 4 letras
+    .count();  // Operación terminal: contar elementos que cumplen el filtro
+
+System.out.println("Nombres con más de 4 letras: " + count);
