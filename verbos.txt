@@ -6,3 +6,8 @@ MÉTODO: (Static) Que se puede utilizar sin necesidad de crear una instancia de 
 
 FINAL: --------------------------------------------------------------------------
 CLASE: Que no puede ser heredada
+
+
+
+PROTECTED: ------------------------------------------------------------------------
+CLASE: Que esa variable o método puede ser solo accesible por subclases de la clase (sus hijitos)
