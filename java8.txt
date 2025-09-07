@@ -1,0 +1,56 @@
+Java 8 es del 2014 y java 24 es del 2025: 
+
+Aquí tienes ejemplos prácticos de las funciones más útiles desde Java 8 hasta Java 24 para Competitive Programming:
+
+### Java 8 - Expresiones Lambda
+```java
+// Lambda para crear un hilo que imprime un mensaje
+Runnable r = () -> System.out.println("Hola desde hilo Lambda");
+new Thread(r).start();
+```
+Permite código más claro y conciso al evitar clases anónimas.[1][2]
+
+### Java 8 - Stream API
+```java
+List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5, 6);
+// Filtrar pares y sumar
+int sum = nums.stream()
+    .filter(n -> n % 2 == 0)
+    .mapToInt(Integer::intValue)
+    .sum();
+System.out.println(sum);  // 12
+```
+El Stream API facilita procesamiento funcional, útil para operaciones rápidas y legibles con colecciones.[3][4][5]
+
+### Java 8 - CompletableFuture (Programación concurrente sencilla)
+```java
+CompletableFuture.supplyAsync(() -> {
+    return "Resultado asincrónico";
+}).thenAccept(result -> {
+    System.out.println(result);
+});
+```
+Permite manejar tareas asíncronas y encadenar ejecuciones sin bloquear el hilo principal.[6][7][8]
+
+### Java 9 - Módulos (Para proyectos más grandes)
+```java
+// module-info.java
+module mi.modulo {
+    requires java.base;
+    exports com.mi.paquete;
+}
+```
+Organiza el proyecto en módulos para mejorar mantenimiento y reducir dependencias innecesarias.[9][10][11]
+
+### Java 24 - Foreign Function & Memory API (Interoperabilidad con código nativo)
+```java
+// Ejemplo simplificado para llamar función nativa C desde Java
+Linker linker = Linker.nativeLinker();
+MethodHandle radSort = linker.downcallHandle(linker.defaultLookup().find("radixsort"), ...);
+// uso de memoria off-heap para datos y llamada
+```
+Ideal para optimizar llamadas a código nativo y manejar memoria fuera de Java para casos de alto rendimiento.[12][13][14]
+
+***
+
+Estos ejemplos cubren las funciones esenciales para Competitive Programming: lambdas y streams para código conciso y rápido, CompletableFuture para paralelismo simple, y a partir de Java 9 en adelante, modularidad y APIs avanzadas para mantenimiento y rendimiento.
