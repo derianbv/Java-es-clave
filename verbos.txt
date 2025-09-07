@@ -1,0 +1,8 @@
+
+ESTÁTICO ------------------------------------------------------------------------
+MÉTODO: (Static) Que se puede utilizar sin necesidad de crear una instancia de la clase que lo contiene, ejemplo: print(1) y no System.out.print(1) 
+
+
+
+FINAL: --------------------------------------------------------------------------
+CLASE: Que no puede ser heredada
