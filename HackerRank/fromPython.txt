@@ -94,12 +94,19 @@ double numeroDecimal = 3.14;
 boolean esVerdadero = true;  // nota: true con minúscula
 char caracter = 'A';          // char usa comillas simples
 
+En estos se van al  stack (ATT ASM) y se les reserva un espacio, entonces acceder a estos es fácil y rápido.
+
+
 // Tipos de referencia (objetos)
 String texto = "Hola";        // String usa comillas dobles
 Integer numeroObjeto = 42;    // Versión objeto de int (wrapper class)
 ```
 
 La distinción entre primitivos y objetos en Java es importante para el rendimiento. Los primitivos son más rápidos y usan menos memoria, mientras que sus versiones objeto (wrapper classes) permiten características adicionales como valores null y uso en colecciones genéricas.
+
+Cuando se accede a objetos de tipo referencia, el procesador tiene que realizar varios saltos por la memoria RAM para confirmar varios datos diferentes de la variable. 
+
+
 
 ## 4. Condicionales y Control de Flujo
 
