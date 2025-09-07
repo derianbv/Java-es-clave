@@ -1,0 +1,836 @@
+# Java para Programadores de Python: Guía Comparativa
+
+## Introducción: La Filosofía Fundamental
+
+Antes de entrar en los detalles técnicos, es importante entender que Java y Python tienen filosofías muy diferentes. Python sigue el principio de "debería haber una, y preferiblemente solo una, manera obvia de hacerlo", mientras que Java es más estricto y verboso por diseño, priorizando la seguridad de tipos y la estructura explícita.
+
+## 1. Tipado Estático vs Dinámico
+
+Esta es quizás la diferencia más fundamental entre ambos lenguajes. En Python, las variables pueden cambiar de tipo durante la ejecución, mientras que en Java debes declarar el tipo de cada variable y este no puede cambiar.
+
+### En Python:
+```python
+# Python - tipado dinámico
+numero = 10        # es un entero
+numero = "diez"    # ahora es un string (perfectamente válido)
+numero = 10.5      # ahora es un float
+
+# Python infiere el tipo automáticamente
+lista = [1, 2, 3]  # Python sabe que es una lista
+```
+
+### En Java:
+```java
+// Java - tipado estático
+int numero = 10;           // declaramos que es un entero
+// numero = "diez";        // ERROR! No puedes asignar un String a un int
+// numero = 10.5;          // ERROR! No puedes asignar un double a un int
+
+// Debes declarar el tipo explícitamente
+ArrayList<Integer> lista = new ArrayList<>();  // Lista de enteros
+lista.add(1);
+lista.add(2);
+// lista.add("tres");      // ERROR! Solo acepta enteros
+```
+
+La ventaja del tipado estático es que muchos errores se detectan en tiempo de compilación en lugar de en tiempo de ejecución. Es como tener un corrector ortográfico que te avisa antes de enviar el email, en lugar de descubrir el error después.
+
+## 2. Estructura Básica del Programa
+
+Java requiere que todo el código esté dentro de clases, lo cual puede parecer excesivo viniendo de Python donde puedes escribir código directamente.
+
+### En Python:
+```python
+# archivo: saludar.py
+def saludar(nombre):
+    return f"Hola, {nombre}!"
+
+# Código ejecutable directamente
+mensaje = saludar("María")
+print(mensaje)
+```
+
+### En Java:
+```java
+// archivo: Saludar.java
+public class Saludar {
+    // Todo método debe estar dentro de una clase
+    public static String saludar(String nombre) {
+        return "Hola, " + nombre + "!";
+    }
+    
+    // Punto de entrada del programa
+    public static void main(String[] args) {
+        String mensaje = saludar("María");
+        System.out.println(mensaje);
+    }
+}
+```
+
+Nota cómo en Java necesitas una clase contenedora y un método `main` específico como punto de entrada. Es como si Java insistiera en que toda casa debe tener una puerta principal claramente marcada.
+
+## 3. Declaración de Variables y Tipos Primitivos
+
+Java distingue entre tipos primitivos (que almacenan valores directamente) y tipos de referencia (que almacenan referencias a objetos). Python trata todo como objetos.
+
+### En Python:
+```python
+# En Python todo es un objeto
+numero_entero = 42
+numero_decimal = 3.14
+es_verdadero = True
+caracter = 'A'  # No hay distinción entre char y string
+texto = "Hola"
+
+# Puedes verificar el tipo si quieres
+print(type(numero_entero))  # <class 'int'>
+```
+
+### En Java:
+```java
+// Tipos primitivos (valores directos, más eficientes)
+int numeroEntero = 42;
+double numeroDecimal = 3.14;
+boolean esVerdadero = true;  // nota: true con minúscula
+char caracter = 'A';          // char usa comillas simples
+
+// Tipos de referencia (objetos)
+String texto = "Hola";        // String usa comillas dobles
+Integer numeroObjeto = 42;    // Versión objeto de int (wrapper class)
+```
+
+La distinción entre primitivos y objetos en Java es importante para el rendimiento. Los primitivos son más rápidos y usan menos memoria, mientras que sus versiones objeto (wrapper classes) permiten características adicionales como valores null y uso en colecciones genéricas.
+
+## 4. Condicionales y Control de Flujo
+
+La lógica es similar, pero Java requiere paréntesis en las condiciones y llaves para los bloques de código.
+
+### En Python:
+```python
+# Python usa indentación y dos puntos
+edad = 18
+
+if edad >= 18:
+    print("Eres mayor de edad")
+    puede_votar = True
+elif edad >= 16:
+    print("Casi mayor de edad")
+    puede_votar = False
+else:
+    print("Eres menor de edad")
+    puede_votar = False
+
+# Operador ternario en Python
+mensaje = "Mayor" if edad >= 18 else "Menor"
+```
+
+### En Java:
+```java
+// Java usa paréntesis y llaves
+int edad = 18;
+
+if (edad >= 18) {
+    System.out.println("Eres mayor de edad");
+    boolean puedeVotar = true;
+} else if (edad >= 16) {
+    System.out.println("Casi mayor de edad");
+    boolean puedeVotar = false;
+} else {
+    System.out.println("Eres menor de edad");
+    boolean puedeVotar = false;
+}
+
+// Operador ternario en Java
+String mensaje = (edad >= 18) ? "Mayor" : "Menor";
+```
+
+## 5. Bucles y Iteración
+
+Los conceptos son similares, pero la sintaxis difiere considerablemente.
+
+### En Python:
+```python
+# For con rango
+for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4
+
+# For sobre una lista
+frutas = ["manzana", "banana", "pera"]
+for fruta in frutas:
+    print(fruta)
+
+# While
+contador = 0
+while contador < 3:
+    print(contador)
+    contador += 1
+
+# List comprehension (muy pythónico)
+cuadrados = [x**2 for x in range(5)]
+```
+
+### En Java:
+```java
+// For tradicional
+for (int i = 0; i < 5; i++) {
+    System.out.println(i);  // 0, 1, 2, 3, 4
+}
+
+// For-each (enhanced for loop)
+String[] frutas = {"manzana", "banana", "pera"};
+for (String fruta : frutas) {
+    System.out.println(fruta);
+}
+
+// While
+int contador = 0;
+while (contador < 3) {
+    System.out.println(contador);
+    contador++;  // Java tiene operador ++
+}
+
+// Java no tiene list comprehensions nativamente
+// Pero desde Java 8 puedes usar streams
+List<Integer> cuadrados = IntStream.range(0, 5)
+    .map(x -> x * x)
+    .boxed()
+    .collect(Collectors.toList());
+```
+
+## 6. Funciones vs Métodos
+
+En Python puedes tener funciones independientes. En Java, todo son métodos dentro de clases.
+
+### En Python:
+```python
+# Función simple
+def sumar(a, b):
+    return a + b
+
+# Función con valor por defecto
+def saludar(nombre="Mundo"):
+    return f"Hola, {nombre}"
+
+# Función con número variable de argumentos
+def sumar_todos(*numeros):
+    return sum(numeros)
+
+# Llamadas
+resultado = sumar(3, 5)
+saludo = saludar()  # usa valor por defecto
+total = sumar_todos(1, 2, 3, 4, 5)
+```
+
+### En Java:
+```java
+public class Operaciones {
+    // Método estático (no necesita instancia)
+    public static int sumar(int a, int b) {
+        return a + b;
+    }
+    
+    // Sobrecarga de métodos para simular valores por defecto
+    public static String saludar() {
+        return saludar("Mundo");  // llama a la versión con parámetro
+    }
+    
+    public static String saludar(String nombre) {
+        return "Hola, " + nombre;
+    }
+    
+    // Varargs para número variable de argumentos
+    public static int sumarTodos(int... numeros) {
+        int suma = 0;
+        for (int num : numeros) {
+            suma += num;
+        }
+        return suma;
+    }
+    
+    // Llamadas
+    public static void main(String[] args) {
+        int resultado = sumar(3, 5);
+        String saludo = saludar();  // usa la versión sin parámetros
+        int total = sumarTodos(1, 2, 3, 4, 5);
+    }
+}
+```
+
+## 7. Clases y Programación Orientada a Objetos
+
+Ambos lenguajes soportan POO, pero Java es más estricto y formal en su implementación.
+
+### En Python:
+```python
+class Persona:
+    # Constructor
+    def __init__(self, nombre, edad):
+        self.nombre = nombre  # público por defecto
+        self._edad = edad     # convención: _ indica "privado"
+    
+    # Método de instancia
+    def presentarse(self):
+        return f"Hola, soy {self.nombre} y tengo {self._edad} años"
+    
+    # Getter (usando property)
+    @property
+    def edad(self):
+        return self._edad
+    
+    # Setter
+    @edad.setter
+    def edad(self, nueva_edad):
+        if nueva_edad > 0:
+            self._edad = nueva_edad
+
+# Uso
+persona = Persona("Juan", 25)
+print(persona.presentarse())
+print(persona.edad)  # usa el getter automáticamente
+persona.edad = 26    # usa el setter automáticamente
+```
+
+### En Java:
+```java
+public class Persona {
+    // Atributos privados (encapsulación real)
+    private String nombre;
+    private int edad;
+    
+    // Constructor
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+    // Método de instancia
+    public String presentarse() {
+        return "Hola, soy " + nombre + " y tengo " + edad + " años";
+    }
+    
+    // Getter
+    public int getEdad() {
+        return edad;
+    }
+    
+    // Setter
+    public void setEdad(int nuevaEdad) {
+        if (nuevaEdad > 0) {
+            this.edad = nuevaEdad;
+        }
+    }
+    
+    // Uso (en el método main)
+    public static void main(String[] args) {
+        Persona persona = new Persona("Juan", 25);
+        System.out.println(persona.presentarse());
+        System.out.println(persona.getEdad());  // llama al getter explícitamente
+        persona.setEdad(26);  // llama al setter explícitamente
+    }
+}
+```
+
+Java enforza la encapsulación de manera más estricta con modificadores de acceso reales (`private`, `public`, `protected`), mientras que Python confía en convenciones.
+
+## 8. Herencia
+
+El concepto es similar, pero la sintaxis y algunos detalles difieren.
+
+### En Python:
+```python
+# Clase base
+class Animal:
+    def __init__(self, nombre):
+        self.nombre = nombre
+    
+    def hacer_sonido(self):
+        pass  # método para sobrescribir
+
+# Clase derivada
+class Perro(Animal):  # hereda de Animal
+    def __init__(self, nombre, raza):
+        super().__init__(nombre)  # llama al constructor padre
+        self.raza = raza
+    
+    def hacer_sonido(self):
+        return "Guau!"
+
+# Uso
+mi_perro = Perro("Max", "Labrador")
+print(mi_perro.hacer_sonido())
+```
+
+### En Java:
+```java
+// Clase base
+public class Animal {
+    protected String nombre;  // protected: accesible por subclases
+    
+    public Animal(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public void hacerSonido() {
+        // método para sobrescribir
+    }
+}
+
+// Clase derivada
+public class Perro extends Animal {  // extends para heredar
+    private String raza;
+    
+    public Perro(String nombre, String raza) {
+        super(nombre);  // llama al constructor padre
+        this.raza = raza;
+    }
+    
+    @Override  // anotación opcional pero recomendada
+    public void hacerSonido() {
+        System.out.println("Guau!");
+    }
+}
+
+// Uso
+Perro miPerro = new Perro("Max", "Labrador");
+miPerro.hacerSonido();
+```
+
+## 9. Manejo de Excepciones
+
+El concepto es similar pero Java distingue entre excepciones checked y unchecked.
+
+### En Python:
+```python
+# Python - todas las excepciones son "unchecked"
+def dividir(a, b):
+    try:
+        resultado = a / b
+        return resultado
+    except ZeroDivisionError:
+        print("Error: División por cero")
+        return None
+    except Exception as e:
+        print(f"Error inesperado: {e}")
+        return None
+    finally:
+        print("Operación completada")
+
+# Lanzar excepciones
+def validar_edad(edad):
+    if edad < 0:
+        raise ValueError("La edad no puede ser negativa")
+    return True
+```
+
+### En Java:
+```java
+// Java distingue entre checked y unchecked exceptions
+public class Excepciones {
+    public static Double dividir(double a, double b) {
+        try {
+            double resultado = a / b;
+            return resultado;
+        } catch (ArithmeticException e) {
+            System.out.println("Error: División por cero");
+            return null;
+        } catch (Exception e) {
+            System.out.println("Error inesperado: " + e.getMessage());
+            return null;
+        } finally {
+            System.out.println("Operación completada");
+        }
+    }
+    
+    // Método que lanza excepción checked (debe declararse)
+    public static boolean validarEdad(int edad) throws Exception {
+        if (edad < 0) {
+            throw new Exception("La edad no puede ser negativa");
+        }
+        return true;
+    }
+}
+```
+
+En Java, las excepciones checked (como `IOException`) deben ser declaradas en la firma del método con `throws` o manejadas con try-catch. Las unchecked (como `RuntimeException`) no requieren esto.
+
+## 10. Colecciones y Estructuras de Datos
+
+Python tiene estructuras de datos integradas muy flexibles. Java tiene un framework de colecciones más formal.
+
+### En Python:
+```python
+# Lista (mutable, ordenada)
+lista = [1, 2, 3, "cuatro", 5.0]  # puede mezclar tipos
+lista.append(6)
+lista.remove(2)
+
+# Tupla (inmutable)
+tupla = (1, 2, 3)
+
+# Conjunto (sin duplicados)
+conjunto = {1, 2, 3, 3}  # resulta en {1, 2, 3}
+
+# Diccionario
+diccionario = {
+    "nombre": "Juan",
+    "edad": 25,
+    "activo": True
+}
+diccionario["ciudad"] = "Madrid"
+
+# List comprehension con diccionarios
+cuadrados_dict = {x: x**2 for x in range(5)}
+```
+
+### En Java:
+```java
+import java.util.*;
+
+// ArrayList (equivalente a lista de Python)
+ArrayList<Integer> lista = new ArrayList<>();
+lista.add(1);
+lista.add(2);
+lista.add(3);
+// No puedes mezclar tipos sin usar Object o genéricos
+
+// Array (tamaño fijo)
+int[] array = {1, 2, 3};
+
+// HashSet (conjunto sin duplicados)
+HashSet<Integer> conjunto = new HashSet<>();
+conjunto.add(1);
+conjunto.add(2);
+conjunto.add(3);
+conjunto.add(3);  // no se añade, ya existe
+
+// HashMap (equivalente a diccionario)
+HashMap<String, Object> diccionario = new HashMap<>();
+diccionario.put("nombre", "Juan");
+diccionario.put("edad", 25);
+diccionario.put("activo", true);
+diccionario.put("ciudad", "Madrid");
+
+// Java no tiene comprehensions nativas, pero con streams:
+Map<Integer, Integer> cuadradosMap = IntStream.range(0, 5)
+    .boxed()
+    .collect(Collectors.toMap(x -> x, x -> x * x));
+```
+
+## 11. Strings y su Manipulación
+
+Los strings en Java son inmutables como en Python, pero los métodos tienen nombres diferentes.
+
+### En Python:
+```python
+# Creación y concatenación
+nombre = "Juan"
+apellido = "Pérez"
+completo = nombre + " " + apellido
+completo_f = f"{nombre} {apellido}"  # f-strings
+
+# Métodos comunes
+texto = "  Hola Mundo  "
+print(texto.strip())      # "Hola Mundo"
+print(texto.lower())      # "  hola mundo  "
+print(texto.upper())      # "  HOLA MUNDO  "
+print(texto.replace("Mundo", "Python"))  # "  Hola Python  "
+
+# División y unión
+palabras = "uno,dos,tres".split(",")  # ['uno', 'dos', 'tres']
+unido = "-".join(palabras)  # "uno-dos-tres"
+
+# Verificaciones
+print("Hola" in texto)  # True
+print(texto.startswith("  H"))  # True
+```
+
+### En Java:
+```java
+// Creación y concatenación
+String nombre = "Juan";
+String apellido = "Pérez";
+String completo = nombre + " " + apellido;
+String completoFormat = String.format("%s %s", nombre, apellido);
+
+// Métodos comunes
+String texto = "  Hola Mundo  ";
+System.out.println(texto.trim());           // "Hola Mundo"
+System.out.println(texto.toLowerCase());    // "  hola mundo  "
+System.out.println(texto.toUpperCase());    // "  HOLA MUNDO  "
+System.out.println(texto.replace("Mundo", "Java"));  // "  Hola Java  "
+
+// División y unión
+String[] palabras = "uno,dos,tres".split(",");  // ["uno", "dos", "tres"]
+String unido = String.join("-", palabras);      // "uno-dos-tres"
+
+// Verificaciones
+System.out.println(texto.contains("Hola"));     // true
+System.out.println(texto.startsWith("  H"));    // true
+
+// StringBuilder para concatenación eficiente
+StringBuilder sb = new StringBuilder();
+sb.append("Hola");
+sb.append(" ");
+sb.append("Mundo");
+String resultado = sb.toString();  // "Hola Mundo"
+```
+
+## 12. Entrada/Salida y Manejo de Archivos
+
+### En Python:
+```python
+# Entrada del usuario
+nombre = input("¿Cuál es tu nombre? ")
+edad = int(input("¿Cuál es tu edad? "))
+
+# Lectura de archivo
+with open("archivo.txt", "r") as archivo:
+    contenido = archivo.read()
+    # o línea por línea
+    for linea in archivo:
+        print(linea.strip())
+
+# Escritura de archivo
+with open("salida.txt", "w") as archivo:
+    archivo.write("Hola Mundo\n")
+    archivo.write("Segunda línea")
+
+# El with statement cierra automáticamente el archivo
+```
+
+### En Java:
+```java
+import java.util.Scanner;
+import java.io.*;
+
+// Entrada del usuario
+Scanner scanner = new Scanner(System.in);
+System.out.print("¿Cuál es tu nombre? ");
+String nombre = scanner.nextLine();
+System.out.print("¿Cuál es tu edad? ");
+int edad = scanner.nextInt();
+scanner.close();
+
+// Lectura de archivo (try-with-resources, similar al with de Python)
+try (BufferedReader br = new BufferedReader(new FileReader("archivo.txt"))) {
+    String linea;
+    while ((linea = br.readLine()) != null) {
+        System.out.println(linea);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+// Escritura de archivo
+try (PrintWriter writer = new PrintWriter("salida.txt")) {
+    writer.println("Hola Mundo");
+    writer.println("Segunda línea");
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+}
+```
+
+## 13. Interfaces y Clases Abstractas (Concepto único de Java)
+
+Python no tiene interfaces explícitas, aunque puedes usar ABC (Abstract Base Classes). Java las usa extensivamente para definir contratos.
+
+### En Python (simulando interfaces):
+```python
+from abc import ABC, abstractmethod
+
+# Clase abstracta
+class Forma(ABC):
+    @abstractmethod
+    def calcular_area(self):
+        pass
+    
+    @abstractmethod
+    def calcular_perimetro(self):
+        pass
+
+# Implementación
+class Rectangulo(Forma):
+    def __init__(self, ancho, alto):
+        self.ancho = ancho
+        self.alto = alto
+    
+    def calcular_area(self):
+        return self.ancho * self.alto
+    
+    def calcular_perimetro(self):
+        return 2 * (self.ancho + self.alto)
+```
+
+### En Java:
+```java
+// Interface (contrato puro)
+public interface Forma {
+    double calcularArea();  // implícitamente public abstract
+    double calcularPerimetro();
+}
+
+// Clase abstracta (puede tener implementación parcial)
+public abstract class FormaBase implements Forma {
+    protected String color;
+    
+    public FormaBase(String color) {
+        this.color = color;
+    }
+    
+    // Método concreto
+    public String getColor() {
+        return color;
+    }
+    
+    // Métodos abstractos
+    public abstract double calcularArea();
+    public abstract double calcularPerimetro();
+}
+
+// Implementación concreta
+public class Rectangulo extends FormaBase {
+    private double ancho;
+    private double alto;
+    
+    public Rectangulo(String color, double ancho, double alto) {
+        super(color);
+        this.ancho = ancho;
+        this.alto = alto;
+    }
+    
+    @Override
+    public double calcularArea() {
+        return ancho * alto;
+    }
+    
+    @Override
+    public double calcularPerimetro() {
+        return 2 * (ancho + alto);
+    }
+}
+```
+
+## 14. Paquetes y Módulos
+
+La organización del código es diferente entre ambos lenguajes.
+
+### En Python:
+```python
+# archivo: matematicas.py
+def sumar(a, b):
+    return a + b
+
+def multiplicar(a, b):
+    return a * b
+
+# archivo: main.py
+import matematicas
+resultado = matematicas.sumar(5, 3)
+
+# O importación selectiva
+from matematicas import sumar
+resultado = sumar(5, 3)
+
+# Paquetes (carpeta con __init__.py)
+# mi_paquete/
+#   __init__.py
+#   modulo1.py
+#   modulo2.py
+```
+
+### En Java:
+```java
+// archivo: com/miempresa/matematicas/Operaciones.java
+package com.miempresa.matematicas;
+
+public class Operaciones {
+    public static int sumar(int a, int b) {
+        return a + b;
+    }
+    
+    public static int multiplicar(int a, int b) {
+        return a * b;
+    }
+}
+
+// archivo: com/miempresa/Main.java
+package com.miempresa;
+
+import com.miempresa.matematicas.Operaciones;
+
+public class Main {
+    public static void main(String[] args) {
+        int resultado = Operaciones.sumar(5, 3);
+    }
+}
+```
+
+Java usa una estructura de directorios que debe coincidir con el nombre del paquete, mientras que Python es más flexible.
+
+## 15. Características Modernas: Lambdas y Streams
+
+Desde Java 8, el lenguaje incluye características funcionales similares a Python.
+
+### En Python:
+```python
+# Lambda
+cuadrado = lambda x: x ** 2
+print(cuadrado(5))  # 25
+
+# Map, filter, reduce
+numeros = [1, 2, 3, 4, 5]
+cuadrados = list(map(lambda x: x ** 2, numeros))
+pares = list(filter(lambda x: x % 2 == 0, numeros))
+
+from functools import reduce
+suma = reduce(lambda x, y: x + y, numeros)
+
+# List comprehension (más pythónico)
+cuadrados = [x ** 2 for x in numeros]
+pares = [x for x in numeros if x % 2 == 0]
+```
+
+### En Java:
+```java
+import java.util.*;
+import java.util.stream.*;
+
+// Lambda
+Function<Integer, Integer> cuadrado = x -> x * x;
+System.out.println(cuadrado.apply(5));  // 25
+
+// Streams (equivalente a map, filter, reduce)
+List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5);
+
+List<Integer> cuadrados = numeros.stream()
+    .map(x -> x * x)
+    .collect(Collectors.toList());
+
+List<Integer> pares = numeros.stream()
+    .filter(x -> x % 2 == 0)
+    .collect(Collectors.toList());
+
+int suma = numeros.stream()
+    .reduce(0, (x, y) -> x + y);
+
+// Method references (sintaxis más concisa)
+numeros.forEach(System.out::println);
+```
+
+## Consejos Finales para la Transición
+
+Viniendo de Python a Java, estos son los ajustes mentales más importantes:
+
+1. **Abraza el tipado estático**: Aunque parece más trabajo al principio, el compilador será tu mejor amigo para detectar errores temprano. Es como tener un revisor de código automático que trabaja instantáneamente.
+
+2. **Acostúmbrate a la verbosidad**: Java es más explícito por diseño. Donde Python dice "asumamos que el programador sabe lo que hace", Java dice "dejemos todo absolutamente claro". Esto hace el código más largo pero también más autodocumentado.
+
+3. **Piensa en términos de clases**: En Java, incluso el programa más simple necesita una clase. Es como si Java insistiera en que todo debe estar perfectamente organizado en cajones etiquetados.
+
+4. **Aprovecha el IDE**: Mientras que en Python puedes ser productivo con un editor simple, en Java un buen IDE (IntelliJ IDEA, Eclipse, NetBeans) es casi esencial. El IDE puede generar mucho código boilerplate por ti y ayudarte con las importaciones y refactorizaciones.
+
+5. **Entiende la diferencia entre primitivos y objetos**: Esta distinción no existe en Python pero es crucial para el rendimiento en Java. Usa primitivos cuando puedas y objetos cuando necesites características adicionales.
+
+6. **Familiarízate con el ecosistema**: Java tiene un ecosistema maduro con herramientas como Maven o Gradle para gestión de dependencias, JUnit para testing, y Spring para desarrollo web. Es como aprender no solo el idioma sino también la cultura del país.
+
+La transición de Python a Java puede parecer como cambiar de escribir poesía libre a escribir sonetos: más reglas, más estructura, pero también una elegancia diferente y la capacidad de construir sistemas muy robustos y escalables.
