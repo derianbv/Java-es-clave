@@ -1,0 +1,13 @@
+**** Creación ****
+  HashMap<Integer,Integer> hash = new HashMap<>(); 
+
+
+**** Agregar ****
+  hash.put(101, 500); #(clave,valor) 
+
+  ****Print****
+  System.out.println(hash); 
+
+**** value in hash ****
+  hash.containsKey(a); # O(1) (Igual en python) calcula el hash con a y si hay algo en esa memoria entonces sí está. 
+  hash.containsValue(a); #O(n) tiene que calcular todos los hash para confirmar. 
