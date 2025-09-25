@@ -1,3 +1,13 @@
 --------------------------- Métodos útiles -------------------------------------------------
+
+
+-------------- Manejo de int[] --------------------------------
+
+
 **** Inicializar un arreglo estático con 0s ****": 
 int[] arr = new int[5];  // Crea un arreglo de tamaño 5 con todos los valores inicializados a 0
+
+
+**** Imprimir ****
+import java.util.Arrays;
+System.out.println(Arrays.toString(arr));
