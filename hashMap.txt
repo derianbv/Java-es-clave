@@ -11,3 +11,9 @@
 **** value in hash ****
   hash.containsKey(a); # O(1) (Igual en python) calcula el hash con a y si hay algo en esa memoria entonces sí está. 
   hash.containsValue(a); #O(n) tiene que calcular todos los hash para confirmar. 
+
+
+**** Get (Consultar)****
+hash.get(llave)
+
+hash.get(llave,  "Valor por defecto si no está") 
