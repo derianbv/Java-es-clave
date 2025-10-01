@@ -18,3 +18,8 @@ e**** Creación ****
 hash.get(llave)
 
 hash.get(llave,  "Valor por defecto si no está") 
+
+
+
+******** len ***********************
+hashMap.size()
