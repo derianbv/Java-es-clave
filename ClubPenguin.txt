@@ -12,6 +12,7 @@ int[] arr = new int[5];  // Crea un arreglo de tamaño 5 con todos los valores i
 import java.util.Arrays;
 System.out.println(Arrays.toString(arr));
 
+----- Bidimencionales ----
 
 int[][] arr = {{1, 2}, {3, 4}, {5, 6}};
 System.out.println(Arrays.deepToString(arr));
@@ -20,6 +21,16 @@ O(n × m)
 **** Arreglo bidimencional ****
 int[][] pares = new int[n][2];
 
+****Ordenar segun segundo elemento *** 
+int[][] arr = {{5, 3}, {1, 2}, {4, 1}};
+
+// Ascendente
+Arrays.sort(arr, (a, b) -> Integer.compare(a[1], b[1]));
+// [[4, 1], [1, 2], [5, 3]]
+
+// Descendente (reversa)
+Arrays.sort(arr, (a, b) -> Integer.compare(b[1], a[1]));  // ← b, a
+// [[5, 3], [1, 2], [4, 1]]
 
 
 
