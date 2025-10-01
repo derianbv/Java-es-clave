@@ -1,4 +1,4 @@
---------------------------- Métodos útiles -------------------------------------------------
+e--------------------------- Métodos útiles -------------------------------------------------
 
 
 -------------- Manejo de int[] --------------------------------
@@ -11,3 +11,12 @@ int[] arr = new int[5];  // Crea un arreglo de tamaño 5 con todos los valores i
 **** Imprimir ****
 import java.util.Arrays;
 System.out.println(Arrays.toString(arr));
+
+
+---------------------------- Else con parentesis -----------------------------
+
+if (condicion) {
+    // Código que se ejecuta si la condición es verdadera
+} else {
+    // Código que se ejecuta si la condición es falsa
+}
