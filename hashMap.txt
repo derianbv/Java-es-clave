@@ -35,3 +35,21 @@ hash.forEach((c,v)    -> {System.out.println(c + " " + v );});
 //         parámetros  |          cuerpo/body
 //                     |
 //              operador lambda
+
+No se pueden cambiar apuntadores en expreciones lambada:
+
+int[] contador = {0};
+//    ^^^^^^^
+//    Esta es la ETIQUETA/DIRECCIÓN (no puede cambiar en lambda)
+//
+//    Apunta a: [Memoria 0x1A2B3C] → {0}
+//                                     ^
+//                                     Estos BITS sí pueden cambiar
+
+hash.forEach((c, v) -> {
+    contador[0]++;  // ✅ Cambias los bits internos
+    //               Etiqueta 'contador' sigue apuntando a 0x1A2B3C
+    
+    contador = new int[]{5};  // ❌ Intentas cambiar la etiqueta
+    //                         Ahora apuntaría a 0x9F8E7D (otra dirección)
+});
