@@ -20,3 +20,8 @@ if (condicion) {
 } else {
     // Código que se ejecuta si la condición es falsa
 }
+
+
+--------------------------- Existe el =+ ------------------
+
+a += b;  // Equivale a a = a + b;
