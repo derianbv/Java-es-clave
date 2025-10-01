@@ -1,4 +1,4 @@
-**** Creación ****
+e**** Creación ****
   HashMap<Integer,Integer> hash = new HashMap<>(); 
 
 
@@ -10,6 +10,7 @@
 
 **** value in hash ****
   hash.containsKey(a); # O(1) (Igual en python) calcula el hash con a y si hay algo en esa memoria entonces sí está. 
+        !hash.containsKey(n): manera de escribir que no contiene 
   hash.containsValue(a); #O(n) tiene que calcular todos los hash para confirmar. 
 
 
