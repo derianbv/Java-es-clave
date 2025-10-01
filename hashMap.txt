@@ -21,5 +21,17 @@ hash.get(llave,  "Valor por defecto si no está")
 
 
 
-******** len ***********************
+******** len ******************
 hashMap.size() #O(1)
+
+
+************** for each *******************
+
+hash.forEach((c,v) -> {System.out.println(c + " " + v );});
+#es ez, hay que aplicar un lambda function dentro de for each. 
+
+hash.forEach((c,v)    -> {System.out.println(c + " " + v );});
+//           ^^^^^^   ^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//         parámetros  |          cuerpo/body
+//                     |
+//              operador lambda
