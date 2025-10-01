@@ -12,6 +12,11 @@ int[] arr = new int[5];  // Crea un arreglo de tamaño 5 con todos los valores i
 import java.util.Arrays;
 System.out.println(Arrays.toString(arr));
 
+
+int[][] arr = {{1, 2}, {3, 4}, {5, 6}};
+System.out.println(Arrays.deepToString(arr));
+O(n × m)
+
 **** Arreglo bidimencional ****
 int[][] pares = new int[n][2];
 
