@@ -41,6 +41,11 @@ STACK                    HEAP
 -Guarda en el stack un espacio para guardar la dirección en heap de la variable.
 
 
+ArrayList<Integer>[] bucket: acá bucket es como un puntero al heap en donde va a haber un arraylist con integers, por qué lo debo declarar? Por seguridad, para que java 
+se asegure que lo que está dentro del objeto sea un ArrayList con Integers y si no, te avise. Es por nuestro bien :), al final es innecesario pero ayuda (es como typeScript).
+
+
+
 
 
 2. CREACIÓN:  bucket = new ArrayList[5];
