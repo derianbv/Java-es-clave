@@ -1,0 +1,48 @@
+-------------------------------------- Creación y declaración ---------------------------------------
+ArrayList<Integer>[]
+│                  │
+│                  └─── Nivel 1: ARRAY
+│
+└────────────────────── Nivel 2: Cada elemento es un ArrayList<Integer>
+         │
+         └──────────── Nivel 3: Cada ArrayList contiene Integer
+
+similar al int[]. Es decir que tengo un arreglo de enteros. 
+
+
+
+**** Proceso en memoria ****
+-Cuando voy a usar una variable: 
+
+1.DECLARACIÓN: 
+"ArrayList<Integer>[] bucket;" le estoy avisando a Java que voy a necesitar esta variable, lo que hace java es lo siguiente: 
+
+STACK                    HEAP
+    ┌───────────┐           (nada creado)
+    │ bucket: ? │
+    └───────────┘
+-Guarda en el stack un espacio para guardar la dirección en heap de la variable.
+
+2. CREACIÓN: 
+bucket = new ArrayList[5]; La palabra clave "new" hace un par de cosas (busca espacio en el heap, inicializa el constructor y devuelve el espacio en memoria del objeto): 
+
+new ArrayList<>();
+ ↓
+[Paso 1] Busca espacio en memoria → encontró espacio en 0x1000
+[Paso 2] Crea el ArrayList ahí
+[Paso 3] Devuelve 0x1000
+
+Es decir en este caso que bucket no guarda el valor del arreglo sino la dirección en memoria. 
+
+
+
+
+
+**** Memoria ****
+int[] numeros = new int[5]; 
+// numeros apunta al OBJETO completo (header + datos) 
+
+
+
+
+
