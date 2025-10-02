@@ -74,15 +74,35 @@ public class Main
 """"
 
 
+Así se ve entonces como se crean las variables Objetos en memoria: 
+
+ArrayList<Integer> listaAAAA = new ArrayList<>();
+
+			STACK
+			┌──────────────┐
+			│ listaAAAA: 0x2000│
+			└──────────────┘
+			       │
+			       ↓
+			HEAP
+			┌─────────────────────────────────┐ ← 0x2000 (objeto ArrayList) Dirección en el Heap, Metadata del objeto. 
+			│ HEADER del ArrayList            │
+			├─────────────────────────────────┤
+			│ size: 0                         │
+			│ capacity: 10                    │
+			│ elementData: 0x3000 ────────────┼──┐
+			└─────────────────────────────────┘  │
+			                                     │
+			                                     ↓
+			┌─────────────────────────────────┐ ← 0x3000 (array interno)
+			│ HEADER del array interno        │
+			├─────────────────────────────────┤
+			│ [10 espacios para elementos]    │
+			└─────────────────────────────────┘
 
 
 
-
-
-
-
-
--------------------------------------- Creación y declaración ---------------------------------------
+****Creación y declaración ****
 ArrayList<Integer>[]
 │                  │
 │                  └─── Nivel 1: ARRAY
@@ -91,10 +111,14 @@ ArrayList<Integer>[]
          │
          └──────────── Nivel 3: Cada ArrayList contiene Integer
 
-similar al int[]. Es decir que tengo un arreglo de enteros. 
+similar al int[]. Es decir que tengo un arreglo de enteros: 
 
-
-
+		int[] numeros = new int[3];
+		STACK
+		┌──────────────┐
+		│ numeros:     │
+		│   0x1000  ───┼──→ HEAP: [0, 0, 0]
+		└──────────────┘
 
 
 
