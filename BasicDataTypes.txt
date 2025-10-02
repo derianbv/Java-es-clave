@@ -128,9 +128,120 @@ similar al int[]. Es decir que tengo un arreglo de enteros:
 
 
 
+**** Arreglo Multidimencional (arreglo lleno de listas) ****
+ArrayList<Integer>[] bucket = new ArrayList[10];
+
+bucket (ArrayList[])
+   ┌─────────┬─────────┬─────────┐
+   │  null   │  null   │  null   │
+   └─────────┴─────────┴─────────┘
+    índice 0   índice 1   índice 2
 
 
+bucket[0] = new ArrayList<>();
+bucket[1] = new ArrayList<>();
+bucket[2] = new ArrayList<>();
 
 
+bucket (heap)
+   ┌─────────┬─────────┬─────────┐
+   │  ref1   │  ref2   │  ref3   │
+   └─────────┴─────────┴─────────┘
+    índice 0   índice 1   índice 2
+
+Tambien en eh heap:
+ref1 -> ArrayList
+          ┌──────────────────────┐
+          │ elementData: [ ]     │
+          │ size = 0             │
+          └──────────────────────┘
+
+ref2 -> ArrayList
+          ┌──────────────────────┐
+          │ elementData: [ ]     │
+          │ size = 0             │
+          └──────────────────────┘
+
+ref3 -> ArrayList
+          ┌──────────────────────┐
+          │ elementData: [ ]     │
+          │ size = 0             │
+          └──────────────────────┘
 
 
+----------------------------------------- Arrays ------------------------------------------
+
+Siguiendo el ejemplo de arriba: 
+ArrayList<Integer>[] bucket = new ArrayList[10];
+
+ESTO ES UN ARREGLO, NO UNA LISTA, ES UN ARREGLO DE LISTAS. LOS ARREGLOS SOLO PUEDEN TENER UN TIPO DE DATO.
+No pueden tener ArrayList<> o ArrayList<String> o ArrayList<Integer> al mismo tiempo.
+
+POR ESO NO SE PUEDE HACER: 
+
+ArrayList<Integer>[] bucket = new ArrayList<>[10]; o ArrayList<Integer>[] bucket = new ArrayList<Integer>[10];
+
+Básicamente porque eso sería inseguro, ya que hay dos tiempos diferentes en Java, el de compilación y el de runtime, los <> (genéricos: solo le sirven al compilador para evitar que se guarden tipos de datos donde no son permitidos) y el no dejaría pasar eso, pero si lo dejara y se compila entonces el runtime se ejecuta y se eliminan los <>, luego se podría meter datos <String> en los arreglos y eso mata todo. 
+
+
+**** Explicación detallada **** -----------------------
+
+			
+			Análisis de tu explicación
+			
+			"ESTO ES UN ARREGLO, NO UNA LISTA, ES UN ARREGLO DE LISTAS. LOS ARREGLOS SOLO PUEDEN TENER UN TIPO DE DATO."
+			
+			Correcto. La declaración ArrayList<Integer>[] bucket efectivamente crea un arreglo (array) donde cada uno de sus elementos es una lista (ArrayList). Los arreglos en Java almacenan en tiempo de ejecución el tipo de dato que deben contener.
+			
+			"POR ESO NO SE PUEDE HACER: ArrayList<Integer>[] bucket = new ArrayList<>[10]; o ArrayList<Integer>[] bucket = new ArrayList<Integer>[10];"
+			
+			Correcto. Java no permite la creación de arreglos de tipos genéricos parametrizados.[1][2][3][4] Intentar hacerlo resultará en un error de compilación.[1]
+			
+			"Básicamente porque eso sería inseguro, ya que hay dos tiempos diferentes en Java, el de compilación y el de runtime..."
+			
+			Correcto. La razón principal es garantizar la seguridad de tipos (type safety) y la distinción entre el tiempo de compilación y el de ejecución es clave para entender el problema.[3]
+			
+			"...los <> (genéricos: solo le sirven al compilador para evitar que se guarden tipos de datos donde no son permitidos) ... el runtime se ejecuta y se eliminan los <>, luego se podría meter datos <String> en los arreglos y eso mata todo."
+			
+			Esta es la idea central y es correcta. El proceso que describes se llama "Type Erasure" (Borrado de tipo). A continuación, se detalla el porqué esto crea un conflicto con los arreglos.
+			
+			Explicación técnica detallada
+			
+			El problema fundamental surge de cómo interactúan dos características del lenguaje Java:
+			
+			Type Erasure (Borrado de Tipo) en los Genéricos: Durante el proceso de compilación, el compilador de Java utiliza la información de los genéricos (como <Integer> o <String>) para realizar comprobaciones de tipo estrictas.[3] Sin embargo, una vez que el código se compila a bytecode (el lenguaje que ejecuta la Máquina Virtual de Java o JVM), esta información de tipo se "borra" para mantener la compatibilidad con versiones antiguas de Java.[2][5] En tiempo de ejecución, una List<Integer> y una List<String> se convierten simplemente en una List sin formato.[3]
+			
+			Los Arreglos son "Covariantes": En Java, los arreglos son covariantes, lo que significa que un arreglo de un tipo de subclase puede ser asignado a una referencia de un tipo de superclase. Por ejemplo, el siguiente código es válido:
+			
+			
+			Number[] numbers = new Integer[10]; // Válido porque Integer es subclase de Number
+			
+			Aunque esto es válido, los arreglos guardan información de su tipo en tiempo de ejecución. Si intentas agregar un tipo incorrecto (por ejemplo, un Float) al arreglo numbers, se lanzará una excepción ArrayStoreException en tiempo de ejecución.
+			
+			¿Por qué la combinación de ambos es un problema?
+			
+			Si Java permitiera crear arreglos de genéricos, se podría romper la seguridad del sistema de tipos. Consideremos este ejemplo hipotético si fuera legal:
+			
+			code
+			Java
+			download
+			content_copy
+			expand_less
+			// 1. Supongamos que esta línea fuera legal y compilara.
+			List<Integer>[] arrayOfIntegerLists = new ArrayList<Integer>[10];
+			
+			// 2. Debido a que los arreglos son covariantes, podemos hacer esto.
+			Object[] objectArray = arrayOfIntegerLists;
+			
+			// 3. Ahora, podemos intentar agregar una lista de otro tipo.
+			// En tiempo de ejecución, por el "Type Erasure", una ArrayList<String> es solo una ArrayList.
+			// El arreglo en tiempo de ejecución no podría distinguir y permitiría la asignación.
+			objectArray[0] = new ArrayList<String>(); 
+			objectArray[0].add("¡Esto no es un entero!");
+			
+			// 4. El problema ocurre aquí. Se obtiene una ClassCastException en tiempo de ejecución.
+			// Se esperaba un Integer, pero se encontró un String.
+			Integer miEntero = arrayOfIntegerLists[0].get(0);
+			
+			Este escenario, conocido como "heap pollution", viola el propósito principal de los genéricos, que es detectar errores de tipo en tiempo de compilación, no en tiempo de ejecución.[1][3] Para prevenir esta situación, Java prohíbe directamente la creación de arreglos de tipos genéricos parametrizados desde el paso 1.[1]
+			
