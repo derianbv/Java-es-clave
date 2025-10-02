@@ -1,0 +1,76 @@
+------------------------ Constructor ------------------------------------
+Syntaxis mínima: new Clase();
+
+
+**** Combinatoria de posibilidades con un constructor **** 
+EPP: En general mucho del boiler plate es por seguridad y lo maneja el compilador (es el que revisa): 
+
+
+// 1️⃣ Raw type en la variable, raw constructor
+ArrayList lista1 = new ArrayList();      
+// ✅ compila
+// ⚠️ No hay chequeo de tipo, puedes meter cualquier objeto
+lista1.add(5);
+lista1.add("hola"); // ❌ peligro runtime si luego esperas Integer
+
+// 2️⃣ Raw type en la variable, genérico explícito en constructor
+ArrayList lista2 = new ArrayList<Integer>();
+// ✅ compila (raw variable permite asignación)
+// ⚠️ Compilador da warning porque variable es raw
+lista2.add(5);
+lista2.add("hola"); // ❌ peligro runtime
+
+// 3️⃣ Genérico en variable, tipo inferido en constructor
+ArrayList<Integer> lista3 = new ArrayList<>();
+// ✅ compila, seguro
+lista3.add(5);       // ✅ OK
+// lista3.add("hola"); // ❌ error de compilación
+
+// 4️⃣ Genérico en variable, tipo explícito en constructor
+ArrayList<Integer> lista4 = new ArrayList<Integer>();
+// ✅ compila, seguro
+lista4.add(5);       // ✅ OK
+
+// 5️⃣ Genérico en variable, sin paréntesis
+ArrayList<Integer> lista5 = new ArrayList;
+// ❌ ERROR, falta () del constructor 
+
+
+Con un ArrayList raw type (o incluso con un arreglo de Object[]) puedes guardar objetos de distintos tipos en la misma lista o arreglo.
+
+Ejemplo:
+
+ArrayList lista = new ArrayList();
+lista.add(5);        // Integer
+lista.add("hola");   // String
+lista.add(3.14);     // Double
+
+Internamente, el ArrayList guarda referencias a todos esos objetos en su arreglo elementData[]:
+
+elementData = [ ref(Integer(5)), ref(String("hola")), ref(Double(3.14)), null, null, ... ]
+size = 3
+
+⚠️ La trampa
+
+Compila bien, porque raw type no verifica el tipo de los elementos.
+Pero si luego haces algo que asuma un tipo específico, explota:
+
+Integer n = (Integer) lista.get(1); // ❌ ClassCastException
+
+
+Por eso en Java se recomienda usar genéricos (ArrayList<Integer>), para que el compilador te proteja y no puedas mezclar tipos por error
+
+ArrayList lista = new ArrayList();
+lista.add(5);        // Integer
+lista.add("hola");   // String
+lista.add(3.14);     // Double
+
+for (Object o : lista) {
+    System.out.println(o);
+}
+Salida:
+
+Copy code
+5
+hola
+3.14
