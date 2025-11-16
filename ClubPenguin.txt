@@ -46,3 +46,14 @@ if (condicion) {
 --------------------------- Existe el =+ ------------------
 
 a += b;  // Equivale a a = a + b;
+
+
+
+-------------- Division -----------------------
+
+Si son dos enteros 5 / 3, entonces la division será siempre entera: 
+5 / 3 = 1 
+
+para que sea división con decimal, alguno de los numeros debe ser decimal: 
+
+5.0 / 3 = 1.66666 
