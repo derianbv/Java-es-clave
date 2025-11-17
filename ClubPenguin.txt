@@ -59,7 +59,7 @@ para que sea división con decimal, alguno de los numeros debe ser decimal:
 5.0 / 3 = 1.66666 
 
 ----------------------- Strings -----------------------------
-
+ESTO ES POR QUE LOS STRINGS NO SON EDITABLES. 
 
 // String: solo lectura
 String texto = "Hola";
