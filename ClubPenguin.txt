@@ -57,3 +57,23 @@ Si son dos enteros 5 / 3, entonces la division será siempre entera:
 para que sea división con decimal, alguno de los numeros debe ser decimal: 
 
 5.0 / 3 = 1.66666 
+
+----------------------- Strings -----------------------------
+
+
+// String: solo lectura
+String texto = "Hola";
+texto.length();        // ✅ Puedes leer
+texto.charAt(0);       // ✅ Puedes leer
+texto.toUpperCase();   // ✅ Retorna NUEVO string
+// texto.append()?     // ❌ No existe
+// texto.reverse()?    // ❌ No existe
+// texto.insert()?     // ❌ No existe
+
+// StringBuilder: lectura + modificación
+StringBuilder sb = new StringBuilder("Hola");
+sb.length();           // ✅ Puedes leer
+sb.charAt(0);          // ✅ Puedes leer
+sb.append(" Mundo");   // ✅ Puedes modificar el mismo objeto
+sb.reverse();          // ✅ Puedes modificar el mismo objeto
+sb.insert(0, "¡");     // ✅ Puedes modificar el mismo objeto
