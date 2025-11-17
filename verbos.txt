@@ -1,4 +1,9 @@
 
+PRIVADO ------------------------------------------------------------------------
+MÉTODO: Que se puede llamar dentro de la clase (hay privacidad con uno mismo) pero que no se le puede llamar por fuera de la clase. 
+
+
+
 ESTÁTICO ------------------------------------------------------------------------
 MÉTODO: (Static) Que se puede utilizar sin necesidad de crear una instancia de la clase que lo contiene, ejemplo: print(1) y no System.out.print(1) 
 
